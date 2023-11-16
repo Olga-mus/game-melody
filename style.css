@@ -1,12 +1,12 @@
 @import './vendor/fonts/fonts.css';
 
-* {
+/* * {
   outline: 1px solid red;
-}
+} */
 
 body {
-  /* background-image: url(./image/dark.jpg); */
-  background-image: url(./image/web.jpg);
+  background-image: url(./image/dark.jpg);
+  /* background-image: url(./image/web.jpg); */
   background-size: cover;
   height: 100vh;
   background-repeat: no-repeat;
@@ -63,8 +63,7 @@ body {
 
 .level {
   display: flex;
-  justify-content: space-between;
-  width: 550px;
+  justify-content: center;
 }
 
 .menu {
@@ -131,7 +130,7 @@ body {
   height: 100px;
   border-radius: 50%;
   grid-area: normal;
-  justify-self: start;
+  justify-self: center;
 }
 
 .listen_button-slowly {
@@ -143,7 +142,7 @@ body {
   border-radius: 50%;
   grid-area: slowly;
   align-self: center;
-  justify-self: end;
+  justify-self: center;
 }
 
 .dwarf-container__answer {
@@ -162,6 +161,10 @@ body {
     'listener listener'
     'normal slowly';
   justify-items: center;
+  background-color: #fff;
+  border-radius: 20px;
+  border: 1px solid #000;
+  padding: 10px;
 }
 
 .wrap-dwarf {
@@ -197,7 +200,7 @@ body {
 .items,
 .placeholders {
   padding: 0 20px 0;
-  height: 60px;
+  height: 80px;
   background-color: blueviolet;
   display: flex;
   gap: 20px;
@@ -209,9 +212,15 @@ body {
 
 .item,
 .placeholder {
-  background-color: red;
+  background-color: #fff;
   width: 100%;
   border-radius: 20px;
+}
+
+.item {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .answer__letter {
@@ -245,6 +254,19 @@ body {
   justify-content: space-between; */
   padding-left: 20px;
   position: relative;
+}
+
+.hidden {
+  display: none;
+}
+
+.dragging {
+  border: 2px solid rgb(235, 174, 95);
+  opacity: 0.5;
+}
+
+.hovered {
+  border: 1px solid #fc9207ed;
 }
 
 @keyframes butterfly {
@@ -285,4 +307,40 @@ body {
 .transform-spider {
   animation-name: spider;
   animation-duration: 5s;
+}
+
+[data-image='1'] {
+  background-image: url(./image/easy/1.jpg);
+}
+
+[data-image='2'] {
+  background-image: url(./image/easy/2.jpg);
+}
+
+[data-image='3'] {
+  background-image: url(./image/easy/3.jpg);
+}
+
+[data-image='4'] {
+  background-image: url(./image/easy/4.jpg);
+}
+
+[data-image='5'] {
+  background-image: url(./image/easy/5.jpg);
+}
+
+[data-image='6'] {
+  background-image: url(./image/easy/6.jpg);
+}
+
+[data-image='7'] {
+  background-image: url(./image/easy/7.jpg);
+}
+
+[data-image='8'] {
+  background-image: url(./image/easy/8.jpg);
+}
+
+.main {
+  display: none;
 }
