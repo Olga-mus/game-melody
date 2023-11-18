@@ -163,7 +163,9 @@ swtch.addEventListener('click', function (e) {
         item.addEventListener('dragleave', dragleave);
         item.addEventListener('drop', (evt) => {
           console.log('dragdrop');
-          item.append(document.querySelector('.dragging'));
+          if (item.children.length === 0) {
+            item.append(document.querySelector('.dragging'));
+          }
           evt.target.classList.remove('hovered');
         });
       });

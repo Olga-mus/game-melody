@@ -1,4 +1,4 @@
-# Проект: Игра на знание и слуховое восприятие длительностей для музыкантов
+# Проект: Игра на слуховое восприятие музыки для музыкантов (музыкальный диктант)
 
 ### Обзор
 
@@ -21,7 +21,7 @@ Grid Layout, Flexbox, HTML, CSS, Nested БЭМ.
 
 **Ссылка на проект:**
 
-[GitHub Pages](https://olga-mus.github.io/game-rhythm/index.html)
+[GitHub Pages](https://olga-mus.github.io/game-melody/index.html)
 
 **Статус проекта:**
-Закончена.
+В разработке.
