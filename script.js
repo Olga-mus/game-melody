@@ -108,14 +108,14 @@ swtch.addEventListener('click', function (e) {
             <div class="item" data-image="8" draggable = "true"></div>
         </div>
         <div class="placeholders">
-            <div class="placeholder"></div>
-            <div class="placeholder"></div>
-            <div class="placeholder"></div>
-            <div class="placeholder"></div>
-            <div class="placeholder"></div>
-            <div class="placeholder"></div>
-            <div class="placeholder"></div>
-            <div class="placeholder"></div>
+        <div class="placeholder" data-placeholder="1"></div>
+        <div class="placeholder" data-placeholder="2"></div>
+        <div class="placeholder" data-placeholder="3"></div>
+        <div class="placeholder" data-placeholder="4"></div>
+        <div class="placeholder" data-placeholder="5"></div>
+        <div class="placeholder" data-placeholder="6"></div>
+        <div class="placeholder" data-placeholder="7"></div>
+        <div class="placeholder" data-placeholder="8"></div>
         </div>
       `;
 
@@ -157,7 +157,7 @@ swtch.addEventListener('click', function (e) {
       //получаем плейсхолдеры
       const placeholders = document.querySelectorAll('.placeholder');
       placeholders.forEach((item) => {
-        console.log('item', item);
+        // console.log('item', item);
         item.addEventListener('dragover', dragover);
         item.addEventListener('dragenter', dragenter);
         item.addEventListener('dragleave', dragleave);
@@ -167,6 +167,14 @@ swtch.addEventListener('click', function (e) {
             item.append(document.querySelector('.dragging'));
           }
           evt.target.classList.remove('hovered');
+          const { finish, right } = checkGame();
+          if (finish) {
+            if (right) {
+              console.log('Молодец');
+            } else {
+              console.log('Плохо');
+            }
+          }
         });
       });
 
@@ -184,12 +192,34 @@ swtch.addEventListener('click', function (e) {
         console.log('dragleave');
         evt.target.classList.remove('hovered');
       }
-
-      // function dragdrop(evt) {
-      //   console.log('dragdrop');
-      // }
     });
 });
+
+function checkGame() {
+  const items = document.querySelectorAll('.item'); //нотные фрагменты
+  const placeholders = document.querySelectorAll('.placeholder');
+  let finish = true;
+  let right = true;
+
+  items.forEach((item, i) => {
+    //перебираем карточки
+    const note = placeholders[i].querySelector('.item')?.dataset?.image; //атрибуты вставки
+    console.log('note', note);
+    console.log('placeholders', placeholders[i].dataset.placeholder);
+    if (!note) {
+      console.log('not');
+      //если карточки не вставлены
+      finish = false; //продолжаем играть
+    } else if (note !== placeholders[i].dataset.placeholder) {
+      // console.log('note', note);
+      // console.log('placeholders', placeholders);
+      // console.log('yes');
+      //если не верно вставлено
+      right = false;
+    }
+  });
+  return { finish, right };
+}
 
 // фонарик
 document.addEventListener('mousemove', function (e) {
@@ -216,13 +246,3 @@ document.addEventListener('keydown', function (event) {
       .classList.add('transform-spider');
   }
 });
-
-/////////////////////////////////////////////////////
-// btnFast.addEventListener('click', function (event) {
-//   // document.querySelector('.play-sanki_fast').play();
-//   console.log('play');
-// });
-
-// btnSlowly.addEventListener('click', function (event) {
-//   document.querySelector('.play-sanki_slowly').play();
-// });
