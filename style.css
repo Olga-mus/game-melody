@@ -15,6 +15,11 @@ body {
   line-height: 1.3;
 }
 
+button:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
 .light {
   width: 100%;
   height: 100%;
@@ -30,7 +35,7 @@ body {
 }
 
 .turn:hover {
-  opacity: 100;
+  opacity: 0.9;
 }
 
 .turn {
@@ -42,23 +47,17 @@ body {
 }
 
 .turn_text {
-  background-color: aliceblue;
   font-weight: 700;
   margin: 10px 0 0 0;
+  color: white;
 }
 
 .level_button {
-  width: 200px;
-  height: 50px;
+  background-color: rgb(143, 157, 15);
+  font-size: 24px;
+  width: 240px;
+  height: 56px;
   border-radius: 20px;
-}
-
-.level_button__green {
-  background-color: rgb(64, 252, 40);
-}
-
-.level_button__yellow {
-  background-color: rgb(252, 238, 40);
 }
 
 .level {
@@ -145,6 +144,11 @@ body {
   justify-self: center;
 }
 
+.disabled {
+  background-color: rgb(155, 74, 11);
+  color: #2b2a2af5;
+}
+
 .dwarf-container__answer {
   width: 448px;
 }
@@ -177,6 +181,9 @@ body {
 .dwarf-container__message {
   padding: 0;
   margin: 0;
+  width: 330px;
+  text-align: center;
+  hyphens: auto;
 }
 
 .dwarf-container__message {
@@ -187,7 +194,7 @@ body {
 
 .dwarf-container__answer {
   background-image: url(./image/answer.png);
-  width: 470px;
+  width: 570px;
   background-size: contain;
   background-repeat: no-repeat;
   position: relative;
@@ -201,9 +208,10 @@ body {
 .placeholders {
   padding: 0 20px 0;
   height: 80px;
-  background-color: blueviolet;
+  /* background-color: blueviolet; */
   display: flex;
   gap: 20px;
+  justify-content: space-around;
 }
 
 .items {
@@ -222,6 +230,8 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  width: 186px;
+  border: 1px solid red;
 }
 
 .answer__letter {
@@ -238,6 +248,7 @@ body {
   position: absolute;
   left: 92px;
   top: 28%;
+  z-index: -1;
 }
 
 .answer___butterfly {
@@ -296,6 +307,7 @@ body {
   to {
     transform: rotateX(90deg) rotateY(180deg);
     width: 0;
+    backface-visibility: hidden;
   }
 }
 
@@ -308,38 +320,39 @@ body {
 .transform-spider {
   animation-name: spider;
   animation-duration: 5s;
+  transform: translate(50px, -400px);
 }
 
 [data-image='1'] {
-  background-image: url(./image/easy/1.jpg);
+  background-image: url(./image/hard/1.jpg);
 }
 
 [data-image='2'] {
-  background-image: url(./image/easy/2.jpg);
+  background-image: url(./image/hard/2.jpg);
 }
 
 [data-image='3'] {
-  background-image: url(./image/easy/3.jpg);
+  background-image: url(./image/hard/3.jpg);
 }
 
 [data-image='4'] {
-  background-image: url(./image/easy/4.jpg);
+  background-image: url(./image/hard/4.jpg);
 }
 
 [data-image='5'] {
-  background-image: url(./image/easy/5.jpg);
+  background-image: url(./image/hard/5.jpg);
 }
 
 [data-image='6'] {
-  background-image: url(./image/easy/6.jpg);
+  background-image: url(./image/hard/6.jpg);
 }
 
 [data-image='7'] {
-  background-image: url(./image/easy/7.jpg);
+  background-image: url(./image/hard/7.jpg);
 }
 
 [data-image='8'] {
-  background-image: url(./image/easy/8.jpg);
+  background-image: url(./image/hard/8.jpg);
 }
 
 .main {

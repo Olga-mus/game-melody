@@ -1,7 +1,7 @@
 const light = document.querySelector('.light');
 const swtch = document.querySelector('.switch');
-const audioEasyFast = document.querySelector('.play-sanki_fast');
-const audioEasySlowly = document.querySelector('.play-sanki_slowly');
+const audioEasyFast = document.querySelector('.play-friend_fast');
+const audioEasySlowly = document.querySelector('.play-friend_slowly');
 
 // const easy = {
 //   listenFast: './audio/sanki_fast.mp3',
@@ -59,18 +59,17 @@ swtch.addEventListener('click', function (e) {
   //вход easy
 
   document
-    .querySelector('.level_button__green')
+    .querySelector('.level_button')
     .addEventListener('click', function (event) {
       document.body.style.backgroundImage = "url('./image/web.jpg')";
-      //вставить разметку игры easy
       document.querySelector('.menu').style.display = 'none';
 
       document.body.innerHTML = `
       <div class="nav">
             <h1 class="nav__title">Собрав фрагменты мелодии в правильном порядке, ты найдешь следующую подсказку</h1>
             <div class="nav__btns">
-                <button class="nav__btn nav__btn_start">Начать сначала</button>
-                <button class="nav__btn nav__btn_check">Проверить</button>
+                <button class="nav__btn nav__btn_start" type="button">Начать сначала</button>
+                <button class="nav__btn nav__btn_check disabled" type="button" disabled="true">Проверить</button>
             </div>
         </div>
 
@@ -86,26 +85,20 @@ swtch.addEventListener('click', function (e) {
             <div class="dwarf-container">
                 <img class="dwarf-container__img" src="./image/dwarf.png" alt="гном">
                 <div class="dwarf-container__answer">
-                    <p class="dwarf-container__message">YUYUYUY</p>
+                    <p class="dwarf-container__message">Гой еси, добрый молодец! Рад, что ты ко мне заглянул. Жми на кнопки справа и слушай мелодию. Кнопка 🐢 поможет тебе расслышать мелодию детально. Если справишься - освободишь бабочку и получишь ключ</p>
                 </div>
             </div>
 
             <div class="listen">
                 <p class="listen_title">Слушать</p>
-                <button class="listen_button-norm"></button>
-                <button class="listen_button-slowly"></button>
+                <button class="listen_button-norm" type="button"></button>
+                <button class="listen_button-slowly" type="button"></button>
             </div>
         </div>
 
         <div class="items">
-            <div class="item" data-image="1" draggable = "true"></div>
-            <div class="item" data-image="2" draggable = "true"></div>
-            <div class="item" data-image="3" draggable = "true"></div>
-            <div class="item" data-image="4" draggable = "true"></div>
-            <div class="item" data-image="5" draggable = "true"></div>
-            <div class="item" data-image="6" draggable = "true"></div>
-            <div class="item" data-image="7" draggable = "true"></div>
-            <div class="item" data-image="8" draggable = "true"></div>
+        
+
         </div>
         <div class="placeholders">
         <div class="placeholder" data-placeholder="1"></div>
@@ -118,6 +111,26 @@ swtch.addEventListener('click', function (e) {
         <div class="placeholder" data-placeholder="8"></div>
         </div>
       `;
+
+      //перезагрузка страницы
+      document
+        .querySelector('.nav__btn_start')
+        .addEventListener('click', function () {
+          window.location.reload();
+        });
+
+      const images = ['1', '2', '3', '4', '5', '6', '7', '8'];
+
+      const randomNotes = images
+        .sort(() => Math.random() - 0.5)
+        .map(
+          (image) =>
+            `<div class="item" data-image="${image}" draggable = "true"></div>`
+        )
+        .join('\n');
+      document
+        .querySelector('.items')
+        .insertAdjacentHTML('afterbegin', randomNotes);
 
       //слушаем быстрое исполнение
       document
@@ -132,8 +145,6 @@ swtch.addEventListener('click', function (e) {
         .addEventListener('click', function (event) {
           audioEasySlowly.play();
         });
-
-      //снимаем обработчик
 
       //получаем все фрагменты с нотами
       const items = document.querySelectorAll('.item');
@@ -163,17 +174,40 @@ swtch.addEventListener('click', function (e) {
         item.addEventListener('dragleave', dragleave);
         item.addEventListener('drop', (evt) => {
           console.log('dragdrop');
+          // document.querySelector('.item').style.border = 'solid 0px';
           if (item.children.length === 0) {
             item.append(document.querySelector('.dragging'));
           }
           evt.target.classList.remove('hovered');
           const { finish, right } = checkGame();
           if (finish) {
-            if (right) {
-              console.log('Молодец');
-            } else {
-              console.log('Плохо');
-            }
+            document
+              .querySelector('.nav__btn_check')
+              .classList.remove('disabled');
+            document.querySelector('.nav__btn_check').disabled = false;
+            document
+              .querySelector('.nav__btn_check')
+              .addEventListener('click', function () {
+                if (right) {
+                  document.querySelector(
+                    '.dwarf-container__message'
+                  ).textContent =
+                    'Молодец! Твой ключ - буква Л. Прибереги его.';
+                  document
+                    .querySelector('.answer___butterfly')
+                    .classList.add('transform-butterfly');
+
+                  document
+                    .querySelector('.answer___spider')
+                    .classList.add('transform-spider');
+                } else {
+                  console.log('Плохо');
+                  document.querySelector(
+                    '.dwarf-container__message'
+                  ).textContent =
+                    'Где-то закралась ошибочка... попробуй еще разок';
+                }
+              });
           }
         });
       });
@@ -204,7 +238,6 @@ function checkGame() {
   items.forEach((item, i) => {
     //перебираем карточки
     const note = placeholders[i].querySelector('.item')?.dataset?.image; //атрибуты вставки
-    console.log('note', note);
     console.log('placeholders', placeholders[i].dataset.placeholder);
     if (!note) {
       console.log('not');
@@ -235,14 +268,46 @@ document.addEventListener('mousemove', function (e) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Анимация по Q
 
-document.addEventListener('keydown', function (event) {
-  if (event.code == 'KeyQ') {
-    document
-      .querySelector('.answer___butterfly')
-      .classList.add('transform-butterfly');
+// document.addEventListener('keydown', function (event) {
+//   if (event.code == 'KeyQ') {
+//     document
+//       .querySelector('.answer___butterfly')
+//       .classList.add('transform-butterfly');
 
-    document
-      .querySelector('.answer___spider')
-      .classList.add('transform-spider');
-  }
-});
+//     document
+//       .querySelector('.answer___spider')
+//       .classList.add('transform-spider');
+//   }
+// });
+
+// function renderRandomNotes() {
+//   const notes = ['До', 'Ре', 'Ми', 'Фа', 'Соль', 'Ля', 'Си'];
+//   const randomNotes = notes
+//     .map((note, i) => ({ [i + 1]: note }))
+//     .sort(() => Math.random() - 0.5)
+//     .map(
+//       (note) =>
+//         `<div
+//           data-note="${Object.keys(note)}"
+//           class="name"
+//           draggable="true"
+//         >
+//           ${Object.values(note)}
+//         </div>`
+//     )
+//     .join('\n');
+//   document
+//     .querySelector('.names')
+//     .insertAdjacentHTML('afterbegin', randomNotes);
+// }
+
+{
+  /* <div class="item" data-image="1" draggable = "true"></div>
+<div class="item" data-image="2" draggable = "true"></div>
+<div class="item" data-image="3" draggable = "true"></div>
+<div class="item" data-image="4" draggable = "true"></div>
+<div class="item" data-image="5" draggable = "true"></div>
+<div class="item" data-image="6" draggable = "true"></div>
+<div class="item" data-image="7" draggable = "true"></div>
+<div class="item" data-image="8" draggable = "true"></div>  */
+}
